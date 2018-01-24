@@ -57,6 +57,8 @@ label.frame.size.width;\
     self.contentType=ZButtonTypeImageLeft;
     self.space=0;
     self.layer.masksToBounds=YES;
+    [self addSubview:self.imageView];
+    [self addSubview:self.titleLabel];
 }
 -(void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
     if (self.actionBlock) {
@@ -67,25 +69,29 @@ label.frame.size.width;\
         [super sendAction:action to:target forEvent:event];
     }
 }
-
--(void)drawRect:(CGRect)rect {
-    self.selected = self.selected;
-    [self getTitleSizeWithRect:rect font:self.titleFont];
-    [self getImageSizeWithRect:rect];
-    [self getTitleOriginWithRect:rect];
-    [self getImageOriginWithRect:rect];
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    [self getTitleSizeWithRect:self.bounds font:self.titleFont];
+    [self getImageSizeWithRect:self.bounds];
+    [self getTitleOriginWithRect:self.bounds];
+    [self getImageOriginWithRect:self.bounds];
     if (self.image) {
-        [self.image drawInRect:CGRectMake(self.imageOrigin.x, self.imageOrigin.y,self.imageRectSize.width,self.imageRectSize.height)];
+        self.imageView.frame = CGRectMake(self.imageOrigin.x, self.imageOrigin.y,self.imageRectSize.width,self.imageRectSize.height);
     }
-    [self setTitleWithColor:self.titleColor];
+    self.titleLabel.frame = CGRectMake(self.titleOrigin.x, self.titleOrigin.y,self.titleRectSize.width,self.titleRectSize.height);
 }
--(void)setTitleWithColor:(UIColor *)color {
-    if (self.title) {
-        NSMutableDictionary *dict=[NSMutableDictionary new];
-        dict[NSForegroundColorAttributeName]=color;
-        dict[NSFontAttributeName]=self.titleFont;
-        [self.title drawInRect:CGRectMake(self.titleOrigin.x, self.titleOrigin.y,self.titleRectSize.width,self.titleRectSize.height) withAttributes:dict];
+
+-(UIImageView *)imageView {
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc]init];
     }
+    return _imageView;
+}
+-(UILabel *)titleLabel {
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc]init];
+    }
+    return _titleLabel;
 }
 
 -(void)getImageOriginWithRect:(CGRect)rect {
@@ -205,28 +211,32 @@ label.frame.size.width;\
 }
 -(void)setTitle:(NSString *)title {
     _title=title;
-    [self setNeedsDisplay];
+    self.titleLabel.text = title;
+    [self setNeedsLayout];
 }
 -(void)setTitleFont:(UIFont *)titleFont {
     _titleFont=titleFont;
-    [self setNeedsDisplay];
+    self.titleLabel.font = titleFont;
+    [self setNeedsLayout];
 }
 -(void)setTitleColor:(UIColor *)titleColor {
     _titleColor=titleColor;
-    [self setNeedsDisplay];
+    self.titleLabel.textColor = titleColor;
+    [self setNeedsLayout];
 }
 -(void)setImage:(UIImage *)image {
     _image=image;
-    [self setNeedsDisplay];
+    self.imageView.image = image;
+    [self setNeedsLayout];
 }
 
 -(void)setContentType:(ZButtonType)contentType {
     _contentType=contentType;
-    [self setNeedsDisplay];
+    [self setNeedsLayout];
 }
 -(void)setImageSize:(CGSize)imageSize {
     _imageSize=imageSize;
-    [self setNeedsDisplay];
+    [self setNeedsLayout];
 }
 -(void)setSelected:(BOOL)selected {
     [super setSelected:selected];

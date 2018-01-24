@@ -29,13 +29,14 @@
     button.titleNormal = @"我的订单";
     button.titleFont=[UIFont systemFontOfSize:12];
     button.titleSelected = @"查询历史";
+    button.selected = NO;
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     button.actionBlock = ^(ZButton *weakBtn) {
         NSLog(@"1111");
         weakBtn.selected = !weakBtn.selected;
     };
-    
+    [button.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://chatm-icon.oss-cn-beijing.aliyuncs.com/pic/pic_20171109135437541.png"]];
 }
 -(void)buttonClick:(UIButton *)sender {
     sender.selected = !sender.selected;

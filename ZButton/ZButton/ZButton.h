@@ -20,7 +20,8 @@ typedef void(^ActionBlock)(ZButton *weakBtn);
 
 @interface ZButton : UIControl
 
-
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *titleLabel;
 
 /** 图片和文字排布样式 */
 @property (nonatomic,assign) ZButtonType contentType;
