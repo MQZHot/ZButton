@@ -23,9 +23,9 @@
     button.backgroundColor=[UIColor orangeColor];
     button.contentType= ZButtonTypeImageTop;
     button.imageSize = CGSizeMake(40, 38);
-    button.space=15;
-    button.imageNormal=[UIImage imageNamed:@"me_icon_record"];
-    button.imageSelected = [UIImage imageNamed:@"me_icon_indent"];
+//    button.space=15;
+//    button.imageNormal=[UIImage imageNamed:@"me_icon_record"];
+//    button.imageSelected = [UIImage imageNamed:@"me_icon_indent"];
     button.titleNormal = @"我的订单";
     button.titleFont=[UIFont systemFontOfSize:12];
     button.titleSelected = @"查询历史";
@@ -36,7 +36,7 @@
         NSLog(@"1111");
         weakBtn.selected = !weakBtn.selected;
     };
-    [button.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://chatm-icon.oss-cn-beijing.aliyuncs.com/pic/pic_20171109135437541.png"]];
+//    [button.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://chatm-icon.oss-cn-beijing.aliyuncs.com/pic/pic_20171109135437541.png"]];
 }
 -(void)buttonClick:(UIButton *)sender {
     sender.selected = !sender.selected;
