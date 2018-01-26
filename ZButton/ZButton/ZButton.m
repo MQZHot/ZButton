@@ -75,23 +75,10 @@ label.frame.size.width;\
     [self getImageSizeWithRect:self.bounds];
     [self getTitleOriginWithRect:self.bounds];
     [self getImageOriginWithRect:self.bounds];
-    if (self.image) {
+    if (self.image || (self.imageSize.width != CGSizeZero.width || self.imageSize.height != CGSizeZero.height)) {
         self.imageView.frame = CGRectMake(self.imageOrigin.x, self.imageOrigin.y,self.imageRectSize.width,self.imageRectSize.height);
     }
     self.titleLabel.frame = CGRectMake(self.titleOrigin.x, self.titleOrigin.y,self.titleRectSize.width,self.titleRectSize.height);
-}
-
--(UIImageView *)imageView {
-    if (!_imageView) {
-        _imageView = [[UIImageView alloc]init];
-    }
-    return _imageView;
-}
--(UILabel *)titleLabel {
-    if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]init];
-    }
-    return _titleLabel;
 }
 
 -(void)getImageOriginWithRect:(CGRect)rect {
@@ -201,6 +188,10 @@ label.frame.size.width;\
         } else {
             self.imageRectSize=self.imageSize;
         }
+        return;
+    }
+    if (self.imageSize.width!=CGSizeZero.width || self.imageSize.height!=CGSizeZero.height) {
+        self.imageRectSize=self.imageSize;
     }
 }
 
@@ -273,6 +264,20 @@ label.frame.size.width;\
 -(void)setImageSelected:(UIImage *)imageSelected {
     _imageSelected=imageSelected;
     self.image=imageSelected;
+}
+
+#pragma mark - 懒加载
+-(UIImageView *)imageView {
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc]init];
+    }
+    return _imageView;
+}
+-(UILabel *)titleLabel {
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc]init];
+    }
+    return _titleLabel;
 }
 
 @end
